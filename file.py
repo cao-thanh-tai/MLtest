@@ -28,3 +28,4 @@ df =  pd.DataFrame(mt)
 df.to_excel('data/quan_sat.xlsx',index=False)
 for val in x[:10]:   
     print(model.predict(val))
+# print(model.predict(x[4]))

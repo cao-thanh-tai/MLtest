@@ -1,0 +1,7 @@
+digraph {
+	A [label="Feature 1 <= 5"]
+	B [label="Class = Yes"]
+	C [label="Class = No"]
+	A -> B [label=True]
+	A -> C [label=False]
+}

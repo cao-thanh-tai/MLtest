@@ -82,6 +82,19 @@ class DecisionTree:
             if val != y[i] : return False
         return True
     
+    def tinh_phan_tram(self, y):
+        d={}
+        for val in y:
+            if val in d:
+                d[val]+=1
+            else :
+                d[val]=1
+        n = len(y)
+        s="| "
+        for key,value in d.items():
+            pt=round((value/n)*100,2)
+            s +=f"{pt} {key} | "
+        return s
     def build_tree(self, S, y, fea_i = 0, bra_j = -1):
         if self.is_pure(y) : 
             self.left.append(None)
@@ -94,7 +107,7 @@ class DecisionTree:
             self.right.append(None)
             self.value.append("ko bt")
             return
-        self.value.append(None)
+        self.value.append(self.tinh_phan_tram(y))
         count_node=len(self.left)
         self.left.append(count_node+1)
         self.right.append(None)
@@ -125,13 +138,12 @@ class DecisionTree:
         n=0
         for i in range(len(self.feature)):
             for j in range(len(self.threshold[i])):
+                if not self.left[n] : return self.value[n]
                 if s[self.feature[i]]==self.threshold[i][j]:
                     n=self.left[n]
                     break
                 else:
                     n=self.right[n]
-            if self.value[n] : 
-                print(n)
-                return self.value[n]
-        return "ko bt"
+        if n != None : return self.value[n]
+        return "loi"
     

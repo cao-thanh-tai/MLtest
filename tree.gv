@@ -1,0 +1,77 @@
+// my tree
+digraph {
+	0 [label="0
+Anh_sang"]
+	0 [label="0
+Anh_sang
+| 60.78 Co | 39.22 Khong | "]
+	1 [label="1
+Co"]
+	2 [label="2
+| 35.48 Co | 64.52 Khong | "]
+	0 -> 1 [label=Cao]
+	0 -> 2 [label="con lai"]
+	2 [label="2
+Anh_sang
+| 35.48 Co | 64.52 Khong | "]
+	3 [label="3
+| 68.75 Co | 31.25 Khong | "]
+	16 [label="16
+Khong"]
+	2 -> 3 [label=Trung_binh]
+	3 [label="3
+Chat_luong_dat
+| 68.75 Co | 31.25 Khong | "]
+	4 [label="4
+Co"]
+	5 [label="5
+| 55.56 Khong | 44.44 Co | "]
+	3 -> 4 [label=Tot]
+	3 -> 5 [label="con lai"]
+	5 [label="5
+Chat_luong_dat
+| 55.56 Khong | 44.44 Co | "]
+	6 [label="6
+| 42.86 Khong | 57.14 Co | "]
+	15 [label="15
+Khong"]
+	5 -> 6 [label=Trung_binh]
+	6 [label="6
+Phan_bon
+| 42.86 Khong | 57.14 Co | "]
+	7 [label="7
+Co"]
+	8 [label="8
+| 60.0 Khong | 40.0 Co | "]
+	6 -> 7 [label=Co]
+	6 -> 8 [label="con lai"]
+	8 [label="8
+Tuoi_nuoc_deu
+| 60.0 Khong | 40.0 Co | "]
+	9 [label="9
+| 33.33 Khong | 66.67 Co | "]
+	14 [label="14
+Khong"]
+	8 -> 9 [label=Deu]
+	9 [label="9
+Do_am_dat
+| 33.33 Khong | 66.67 Co | "]
+	10 [label="10
+ko bt"]
+	11 [label="11
+| 33.33 Khong | 66.67 Co | "]
+	9 -> 10 [label=Cao]
+	9 -> 11 [label="con lai"]
+	11 [label="11
+Do_am_dat
+| 33.33 Khong | 66.67 Co | "]
+	12 [label="12
+Co"]
+	13 [label="13
+Khong"]
+	11 -> 12 [label=Vua]
+	11 -> 13 [label="con lai"]
+	8 -> 14 [label="con lai"]
+	5 -> 15 [label="con lai"]
+	2 -> 16 [label="con lai"]
+}
