@@ -9,6 +9,7 @@ class VeCay:
         self.left = tree.left
         self.right = tree.right
         self.value = tree.value
+        self.ti_le = tree.ti_le
         self.dot = Digraph(comment="my tree")
         self.col=col
         pass
@@ -19,17 +20,20 @@ class VeCay:
     
     def draw_tree(self, fea_i = 0, bra_j = -1, node = 0):
         if (self.left[node]==None): return 
-        self.dot.node(str(node),f"{node}\n{self.col[self.feature[fea_i]]}\n{self.value[node]}")
+        self.dot.node(str(node),f"{self.col[self.feature[fea_i]]}\n{self.ti_le[node]}")
         node_left=self.left[node]
         node_right=self.right[node]
-        self.dot.node(str(node_left),f"{node_left}\n{self.value[node_left]}")
-        self.dot.node(str(node_right),f"{node_right}\n{self.value[node_right]}")
+        self.dot.node(str(node_left),f"{self.value[node_left]}")
+        self.dot.node(str(node_right),f"{self.value[node_right]}")
         
         lb = self.threshold[fea_i]
+        print(lb, bra_j)
         if bra_j != -1:
             lb = lb[bra_j]
         else:
             lb = lb[0]
+        if isinstance(lb, float):
+            lb = f"> {round(lb, 2)}"
         self.dot.edge(str(node),str(self.left[node]),lb)
         new_bra_j = -1
         if fea_i+1!=len(self.threshold):
@@ -39,7 +43,7 @@ class VeCay:
         
         self.dot.edge(str(node),str(self.right[node]),"con lai")
         
-        if bra_j == -1 or bra_j == len(self.threshold[fea_i]):
+        if bra_j == -1 or bra_j + 1 == len(self.threshold[fea_i]):
             bra_j=new_bra_j
             fea_i+=1
         else:
