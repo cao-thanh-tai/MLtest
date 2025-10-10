@@ -12,7 +12,7 @@ def read_csv(name='data/data_train_test.csv'):
     y = df[col[len(col)-1]].to_numpy()
     return X,y,col
 
-X,y,col=read_csv()
+X,y,col=read_csv('data/cay_phat_trien_moi.csv')
 
 tree = ID3.DecisionTree()
 tree.build(X, y)
@@ -21,8 +21,11 @@ print(tree.threshold)
 print(tree.left)
 print(tree.right)
 print(tree.value)
+# print(tree.ti_le)
 
 vc=VeCay.VeCay(tree,col)
 vc.show_tree()
+
+
 
     

@@ -2,19 +2,18 @@ import numpy as np
 import pandas as pd
 import DecisionTreeID3 as id3
 
-df = pd.read_csv("data/data_train_test.csv")
 
-x=df[["Anh_sang","Tuoi_nuoc_deu","Do_am_dat","Chat_luong_dat","Phan_bon"]].to_numpy()
-y=df["Phat_trien_tot"].to_numpy()
+def read_csv(name='data/data_train_test.csv'):
+    df = pd.read_csv(name)
+    col = df.columns
+    X = df[col[:len(col)-1]].to_numpy()
+    y = df[col[len(col)-1]].to_numpy()
+    return X,y,col
 
-
-df = pd.read_csv("data/test.csv")
-x_test=df[["Anh_sang","Tuoi_nuoc_deu","Do_am_dat","Chat_luong_dat","Phan_bon"]].to_numpy()
-
+X,y,col=read_csv(name='data/cay_phat_trien_moi.csv')
 
 model = id3.DecisionTree()
-
-model.build(x,y)
+model.build(X,y)
 
 print(model.feature)
 print(model.threshold)
@@ -26,6 +25,6 @@ print(model.value)
 mt = np.array([model.left,model.right,model.value])
 df =  pd.DataFrame(mt)
 df.to_excel('data/quan_sat.xlsx',index=False)
-for val in x[:10]:   
-    print(model.predict(val))
+# for val in x[:10]:   
+#     print(model.predict(val))
 # print(model.predict(x[4]))

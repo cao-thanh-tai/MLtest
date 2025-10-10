@@ -1,0 +1,26 @@
+Anh_sang,Tuoi_nuoc_deu,Do_am_dat,Chat_luong_dat,Phat_trien_tot
+Có,Có,Vừa,Vừa,Có
+Không,Có,Thấp,Vừa,Không
+Có,Không,Vừa,Thấp,Không
+Có,Có,Cao,Vừa,Có
+Không,Không,Thấp,Thấp,Không
+Có,Có,Vừa,Cao,Có
+Không,Có,Vừa,Vừa,Có
+Có,Không,Thấp,Vừa,Không
+Có,Có,Cao,Cao,Có
+Không,Không,Vừa,Thấp,Không
+Có,Có,Vừa,Vừa,Có
+Không,Không,Thấp,Vừa,Không
+Có,Có,Cao,Vừa,Có
+Có,Không,Vừa,Thấp,Không
+Không,Có,Vừa,Cao,Có
+Có,Có,Vừa,Cao,Có
+Không,Không,Thấp,Thấp,Không
+Có,Không,Vừa,Vừa,Không
+Có,Có,Cao,Vừa,Có
+Không,Có,Vừa,Vừa,Có
+# test samples
+Có,Không,Thấp,Vừa,?
+Không,Có,Vừa,Cao,?
+Có,Có,Vừa,Thấp,?
+Không,Không,Thấp,Vừa,?

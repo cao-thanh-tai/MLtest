@@ -13,6 +13,7 @@ class DecisionTree:
         self.left = []
         self.right = []
         self.value = []
+        self.ti_le =  []
         pass
     
     def E(self, y):
@@ -44,7 +45,27 @@ class DecisionTree:
         self.threshold.append(list(freq.keys())[:-1])
         return sum
 
+    def EF_lien_tuc(self, s, y):
+        ent = 0.0
+        sy_sorted = sorted(zip(s, y), key=lambda x: x[0])
+        s_sorted, y_sorted = zip(*sy_sorted)
+        n = len(s)
+        for i in range(n-1):
+            if s_sorted[i] != s_sorted[i+1]:
+                threshold = (s_sorted[i] + s_sorted[i+1]) / 2
+                y_left = [y_sorted[j] for j in range(n) if s_sorted[j] <= threshold]
+                y_right = [y_sorted[j] for j in range(n) if s_sorted[j] > threshold]
+                ent_temp = (len(y_left)/n)*self.E(y_left) + (len(y_right)/n)*self.E(y_right)
+                if ent == 0.0 or ent > ent_temp:
+                    ent = ent_temp
+                    best_threshold = threshold
+        self.threshold.append([best_threshold])
+        return ent 
+        
     def IG(self, y, s):
+        if isinstance(s[0], (int, float)):
+            ef = self.EF_lien_tuc(s, y)
+            return self.E(y) - ef
         return self.E(y)-self.EF(s,y)
     
     def update_fea(self, S, y):
@@ -67,7 +88,7 @@ class DecisionTree:
         y_left= []
         y_right = []
         for i in range (len(S)):
-            if S[i][fea_i] == threshold :
+            if S[i][fea_i] > threshold if isinstance(S[0][fea_i], (int,float)) else S[i][fea_i] == threshold :
                 S_left.append(S[i])
                 y_left.append(y[i])
             else :
@@ -82,32 +103,30 @@ class DecisionTree:
             if val != y[i] : return False
         return True
     
-    def tinh_phan_tram(self, y):
+    def tk_sl(self, y):
         d={}
         for val in y:
             if val in d:
                 d[val]+=1
             else :
                 d[val]=1
-        n = len(y)
-        s="| "
-        for key,value in d.items():
-            pt=round((value/n)*100,2)
-            s +=f"{pt} {key} | "
-        return s
+        return d
     def build_tree(self, S, y, fea_i = 0, bra_j = -1):
+        self.ti_le.append(self.tk_sl(y))
         if self.is_pure(y) : 
             self.left.append(None)
             self.right.append(None)
-            self.value.append("ko bt" if len(y) == 0 else y[0])
+            if len(y) != 0 :
+                self.value.append(y[0])
+            else :
+                self.value.append("ko bt")
             return
         if fea_i ==len(self.threshold) : 
-            print('92',fea_i)
             self.left.append(None)
             self.right.append(None)
             self.value.append("ko bt")
             return
-        self.value.append(self.tinh_phan_tram(y))
+        self.value.append(None)
         count_node=len(self.left)
         self.left.append(count_node+1)
         self.right.append(None)
@@ -126,7 +145,7 @@ class DecisionTree:
         new_count_node=len(self.left)
         self.right[count_node]=new_count_node
         
-        if len(self.threshold[fea_i])!= bra_j and bra_j != -1:
+        if len(self.threshold[fea_i])!= bra_j + 1 and bra_j != -1:
             bra_j+=1
         else :
             bra_j = j
