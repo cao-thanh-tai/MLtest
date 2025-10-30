@@ -8,7 +8,7 @@ class decision_tree:
         self.max_depth = max_depth
         
     def split_tree(self, S, y, threshold, feature_idx):
-        if is_categorical(S[feature_idx]):
+        if is_categorical(S[:,feature_idx]):
             mask = S[:, feature_idx] == threshold
         else:
             mask = S[:, feature_idx] <= threshold
@@ -27,6 +27,7 @@ class decision_tree:
         
         if feature_idx is None:
             return node(value=most_common_label(y))
+        
         S_left, y_left, S_right, y_right = self.split_tree(S, y, threshold, feature_idx)
         left_node = self.build_tree(S_left, y_left, depth + 1)
         right_node = self.build_tree(S_right, y_right, depth + 1)
@@ -37,7 +38,11 @@ class decision_tree:
         node = self.root
         while node and node.value is None:
             if isinstance(s[node.feature], (int, float)):
-                node = node.left if s[node.feature] <= node.threshold else node.right
+                try:
+                    node = node.left if s[node.feature] <= node.threshold else node.right
+                except:
+                    print(node.feature,node.threshold) 
+                    break
             else:
                 node = node.left if s[node.feature] == node.threshold else node.right
         return node.value if node else "ko bt"
@@ -78,6 +83,7 @@ def coditional_entropy_continuous(s, y):
     return min_entropy, [best_threshold]
     
 def information_gain(s, y):
+
     if is_categorical(s):
         coud_entropy, thresholds = coditional_entropy_categorical(s, y)
     else :
@@ -99,7 +105,7 @@ def find_best_split(S, y):
         gain, thresholds = information_gain(S[:,i], y)
         if gain > best_gain:
             best_gain = gain
-            best_threshold = thresholds[0] if thresholds[0] else None
+            best_threshold = thresholds[0] if thresholds[0] is not None else None
             best_feature = i
     return best_feature, best_threshold
 
