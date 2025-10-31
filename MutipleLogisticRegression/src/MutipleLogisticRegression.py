@@ -7,16 +7,16 @@ from .utils import softmax, one_hot_data
 
 class MutipleLogisticRegression:
     def __init__(self, random_seed = 42):
-        self.W = None
+        self.W = None  
         self.b = None
         self.random_seed = random_seed
-        self.feature_result = None
+        self.classes = None
         pass
     
-    def _init_weights(self, n_feature, n_feature_result):
+    def _init_parameters(self, n_feature, n_classes):
         np.random.seed(self.random_seed)
-        self.W = np.random.rand(n_feature, n_feature_result)
-        self.b = np.random.rand(1, n_feature_result)
+        self.W = np.random.randn(n_feature, n_classes)
+        self.b = np.zeros(1, n_classes)
     
     def _forward(self, X):
         return softmax(X @ self.W + self.b)
@@ -43,12 +43,12 @@ class MutipleLogisticRegression:
         X = np.array(X, dtype=np.float64)
         y = y.reshape(-1,1)
         n_samples, n_feature = X.shape
-        y_one_hot, self.feature_result = one_hot_data(y)
-        n_feature_result = y_one_hot.shape[1]
+        y_one_hot, self.classes = one_hot_data(y)
+        n_classes = y_one_hot.shape[1]
         
         
         if self.W is None:
-            self._init_weights(n_feature,n_feature_result)
+            self._init_parameters(n_feature,n_classes)
         
             
         for j in range(epochs):
@@ -75,7 +75,7 @@ class MutipleLogisticRegression:
     def predict(self, X):
         y_pred = self._forward(X)
         predicted_indices = np.argmax(y_pred,axis=1)
-        predicted_labels = [int(self.feature_result[i]) for i in predicted_indices]
+        predicted_labels = [int(self.classes[i]) for i in predicted_indices]
         return predicted_labels
         
         
